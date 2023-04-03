@@ -50,7 +50,7 @@ namespace CalculatorTests
             Assert.Equal(7, result);
         }
         [Fact]
-        public void SevenNumbersWithNewLineDelimeter_6()
+        public void SevenNumbersWithNewLineDelimeter_7()
         {
             //Arrenge
             StringCalculator calculator = new StringCalculator();

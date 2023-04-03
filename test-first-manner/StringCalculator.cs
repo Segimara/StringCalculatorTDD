@@ -10,7 +10,18 @@ namespace test_first_manner
     {
         public int Add(string numbers)
         {
-            return numbers.Split(',', '\n').Select(x =>
+            if (string.IsNullOrEmpty(numbers))
+            {
+                return 0;
+            }
+            string DefaultDelimiter = ",";
+            if (numbers.StartsWith("//"))
+            {
+                int delimiterIndex = numbers.IndexOf('\n');
+                DefaultDelimiter = numbers.Substring(2, delimiterIndex - 2);
+                numbers = numbers.Substring(delimiterIndex + 1);
+            }
+            return numbers.Split(new string[] { DefaultDelimiter, "\n" }, StringSplitOptions.RemoveEmptyEntries).Select(x =>
             {
                 if (!string.IsNullOrEmpty(x))
                 {
