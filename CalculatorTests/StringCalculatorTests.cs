@@ -73,17 +73,7 @@ namespace StringCalculator.Logic.Tests
         }
 
         [Fact]
-        public void Add_NumbersWithMultipleCustomDelimiters_ShouldBeEqualSumOfNumbers()
-        {
-            //Arrange
-            var result = _calculator.Add(@"//[;][%]\n1;2%3");
-
-            //Assert
-            Assert.Equal(6, result);
-        }
-
-        [Fact]
-        public void Add_NumbersWithMultipleCustomDelimitersLongenThanOneChar_ShouldBeEqualSumOfNumbers()
+        public void Add_NumbersWithMultipleCustomDelimitersLongernThanOneChar_ShouldBeEqualSumOfNumbers()
         {
             //Arrange
             var result = _calculator.Add(@"//[;#][%*]\n1;#2%*3");
