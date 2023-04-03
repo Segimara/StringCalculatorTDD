@@ -1,3 +1,4 @@
+using StringCalculator.Logic.Exceptions;
 using Xunit;
 
 namespace StringCalculator.Logic.Tests
@@ -70,15 +71,15 @@ namespace StringCalculator.Logic.Tests
             Assert.Equal(6, result);
         }
         [Fact]
-        public void Add_NegativeNums_ShouldThrowException()
+        public void Add_NumsWithMultipleNegativeNums_ShouldThrowException()
         {
 
             //Arrange
-            var testExprestion = "//;\n-1;-2;-3";
+            var testExprestion = "//;\n1;-2;-3";
 
             //Act 
             //Assert
-            Assert.Throws<Exception>(() => _calculator.Add(testExprestion));
+            Assert.Throws<NegativeNumberException>(() => _calculator.Add(testExprestion));
         }
     }
 }

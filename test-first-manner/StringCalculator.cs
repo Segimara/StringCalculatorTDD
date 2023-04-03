@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StringCalculator.Logic.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,19 +20,36 @@ namespace StringCalculator.Logic
             var delimiterList = GetGetDelimiterList(numbers)
                                 .ToArray();
             var normilizeNumbers = NormilizeString(numbers);
-            return normilizeNumbers.Split(delimiterList, StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => StringToNumber(x))
-                .Sum();
+            var separatedNumbers = normilizeNumbers.Split(delimiterList, StringSplitOptions.RemoveEmptyEntries);
+            return GetSumOfSeparatedNumbers(separatedNumbers);
         }
+
+        private int GetSumOfSeparatedNumbers(string[] separatedNumbers)
+        {
+            var negativeNumberException = new NegativeNumberException();
+            int sum = 0;    
+            foreach ( var stringNumber in separatedNumbers)
+            {
+                var number = StringToNumber(stringNumber);
+                if (number < 0)
+                {
+                    negativeNumberException.AddNegateveNumber(number);
+                    continue;
+                }
+                sum += number;
+            }
+            if (negativeNumberException.HasNegativeNumbers)
+            {
+                throw negativeNumberException;
+            }
+            return sum;
+        }
+
         private int StringToNumber(string str)
         {
             if (!string.IsNullOrEmpty(str))
             {
                 var number = int.Parse(str);
-                if (number < 0)
-                {
-                    throw new Exception("negatives not allowed");
-                }
                 return number;
             }
             return 0;
