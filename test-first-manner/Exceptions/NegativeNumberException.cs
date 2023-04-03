@@ -9,6 +9,6 @@ namespace StringCalculator.Logic.Exceptions
 {
     public class NegativeNumberException : Exception
     {
-        public NegativeNumberException(List<int> numbers) : base($"negatives not allowed\n Nubers: {string.Join(",", numbers)}") {}
+        public NegativeNumberException(List<int> numbers) : base($"negatives not allowed\n Numbers: {string.Join(",", numbers)}") {}
     }
 }

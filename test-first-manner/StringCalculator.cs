@@ -17,8 +17,7 @@ namespace StringCalculator.Logic
                 return 0;
             }
 
-            var delimeterList = GetDelimiters(numbers)
-                                .ToArray();
+            var delimeterList = GetDelimiters(numbers);
 
             var separatedNumbers = NormilizeNumbersString(numbers).Split(delimeterList, StringSplitOptions.RemoveEmptyEntries);
 
@@ -28,20 +27,22 @@ namespace StringCalculator.Logic
         private int GetSumOfNumbers(string[] numbers)
         {
             List<int> negativeNumbers = new List<int>();
-            int sum = 0;    
-
+            int sum = 0;
+            var maxNumber = 1000;
             foreach ( var number in numbers)
             {
-                var convertedNumber = (!string.IsNullOrEmpty(number)) ? int.Parse(number) : 0;
+                var convertedNumber = !string.IsNullOrEmpty(number) ? int.Parse(number) : 0;
                 if (convertedNumber < 0)
                 {
                     negativeNumbers.Add(convertedNumber);
                     continue;
                 }
-                if (convertedNumber > 1000)
+
+                if (convertedNumber > maxNumber)
                 {
                     continue;
                 }
+
                 sum += convertedNumber;
             }
 
@@ -53,45 +54,44 @@ namespace StringCalculator.Logic
             return sum;
         }
 
-        private IList<string> GetDelimiters(string numbers)
+        private string[] GetDelimiters(string numbers)
         {
-            var delimiters = new List<string>()
+            var delimiters = new List<string>() { @"\n", "," };
+
+            if (!numbers.StartsWith("//"))
             {
-                "\n",
-                ","
-            };
-
-            if (numbers.StartsWith("//"))
-            {
-                var delimeterIndex = numbers.IndexOf('\n');
-
-                var indexOfEndDelimetersPart = delimeterIndex - 2;
-                var delimitersString = numbers.Substring(2, indexOfEndDelimetersPart);
-
-                if (delimitersString.Contains("["))
-                {
-                    var delimitersArray = delimitersString.Split(new[] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
-
-                    foreach (var delimiter in delimitersArray)
-                    {
-                        delimiters.Add(delimiter);
-                    }
-                }
-
-                else
-                {
-                    delimiters.Add(delimitersString);
-                }
+                return delimiters.ToArray();
 
             }
 
-            return delimiters;
+            var delimeterIndex = numbers.IndexOf(@"\n");
+
+            var indexOfStartDelimetersPart = delimeterIndex - 2;
+            var delimitersString = numbers.Substring(2, indexOfStartDelimetersPart);
+
+            if (delimitersString.Contains("["))
+            {
+                var delimitersArray = delimitersString.Split(new[] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var delimiter in delimitersArray)
+                {
+                    delimiters.Add(delimiter);
+                }
+            }
+
+            else
+            {
+                delimiters.Add(delimitersString);
+            }
+
+            return delimiters.ToArray();
         }
+
         private string NormilizeNumbersString(string numbers)
         {
             if (numbers.Contains("//"))
             {
-                var indexOfEndDelimimitersPart = numbers.IndexOf("\n") + 1;
+                var indexOfEndDelimimitersPart = numbers.IndexOf(@"\n") + 2;
                 numbers = numbers.Substring(indexOfEndDelimimitersPart);
             }
 
