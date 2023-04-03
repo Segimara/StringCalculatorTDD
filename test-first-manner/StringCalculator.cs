@@ -85,7 +85,7 @@ namespace StringCalculator.Logic
             {
                 delimiters.Add(delimitersString);
             }
-
+ 
             return delimiters.ToArray();
         }
 
@@ -95,6 +95,7 @@ namespace StringCalculator.Logic
             List<string> delimiters = new List<string>();
             int startIndex = 0;
             Stack<int> stack = new Stack<int>();
+
             for (int i = 0; i < delimitersString.Length; i++)
             {
                 if (delimitersString[i] == '[' && !stack.Any())
@@ -103,7 +104,17 @@ namespace StringCalculator.Logic
                 }
                 else if (delimitersString[i] == ']')
                 {
+                    //check if next [ are earlier than ]
+                    var nextIndexOfStartSectionChar = delimitersString.IndexOf('[', i);
+                    var nextIndexOfEndSectionChar = delimitersString.IndexOf(']', i + 1);
+
+                    if (nextIndexOfStartSectionChar > nextIndexOfEndSectionChar )
+                    {
+                        continue;
+                    } 
+
                     int start = stack.Pop() + 1;
+                    
                     if (start <= i - 1)
                     {
                         delimiters.Add(delimitersString.Substring(start, i - start));
