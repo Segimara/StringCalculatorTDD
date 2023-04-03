@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\test-first-manner\test-first-manner.csproj" />
+    <ProjectReference Include="..\test-first-manner\StringCalculator.Logic.csproj" />
   </ItemGroup>
 
 </Project>
