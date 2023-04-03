@@ -73,10 +73,7 @@ namespace StringCalculator.Logic
             {
                 var delimitersArray = delimitersString.Split(new[] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
 
-                foreach (var delimiter in delimitersArray)
-                {
-                    delimiters.Add(delimiter);
-                }
+                delimiters.AddRange(delimitersArray);
             }
 
             else
