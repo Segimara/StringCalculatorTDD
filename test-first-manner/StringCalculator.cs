@@ -83,7 +83,6 @@ namespace StringCalculator.Logic
                     delimiters.Add(delimitersString);
                 }
 
-                
             }
 
             return delimiters;
