@@ -21,7 +21,7 @@ namespace StringCalculator.Logic.Exceptions
         {
             get
             {
-                return $"negatives not allowed\n Numbers:{string.Join(',', _negateveNumbers)}";
+                return $"negatives not allowed\n Numbers: {string.Join(',', _negateveNumbers)}";
             }
         }
         public NegativeNumberException() : base()
