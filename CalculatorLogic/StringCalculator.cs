@@ -1,8 +1,9 @@
 ﻿using StringCalculator.Logic.Exceptions;
+using StringCalculator.Logic.Interfaces;
 
 namespace StringCalculator.Logic
 {
-    public class StringCalculator
+    public class StringCalculator : ICalculator
     {
         public int Add(string numbers)
         {

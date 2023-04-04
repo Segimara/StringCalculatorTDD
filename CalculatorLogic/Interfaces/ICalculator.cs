@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace StringCalculator.Logic.Interfaces
 {
-    internal interface ICalculator
+    public interface ICalculator
     {
+        int Add(string numbers);
     }
 }

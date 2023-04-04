@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace StringCalculator.Logic.Interfaces
 {
-    internal interface IProgrammManager
+    public interface IProgramManager
     {
+        IConsoleManager ConsoleManager { get; }
+        ICalculator Calculator { get; }
+        void Run();
     }
 }
