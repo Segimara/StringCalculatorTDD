@@ -5,7 +5,10 @@
         static void Main(string[] args)
         {
             var calculator = new StringCalculator();
-            var result = calculator.Add(Console.ReadLine());
+
+            var input = Console.ReadLine();
+
+            var result = calculator.Add(input);
             Console.WriteLine(result);
         }
     }

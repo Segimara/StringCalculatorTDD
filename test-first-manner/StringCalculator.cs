@@ -93,34 +93,33 @@ namespace StringCalculator.Logic
         private IEnumerable<string> ParseDelimiters(string delimitersString)
         {
             var delimiters = new List<string>();
-            var startIndex = 0;
-            var stack = new Stack<int>();
 
             for (var i = 0; i < delimitersString.Length; i++)
             {
-                if (delimitersString[i] == '[' && !stack.Any())
-                {
-                    stack.Push(i);
-                }
-                else if (delimitersString[i] == ']')
-                {
-                    var nextIndexOfStartSectionChar = delimitersString.IndexOf('[', i);
-                    var nextIndexOfEndSectionChar = delimitersString.IndexOf(']', i + 1);
+                if (delimitersString[i] != '[') continue;
 
-                    if (nextIndexOfStartSectionChar > nextIndexOfEndSectionChar )
-                    {
-                        continue;
-                    } 
-
-                    var start = stack.Pop() + 1;
+                var indexOfStartSign = i + 1;
+                var indexOfEndSign = GetEndSectionDelimiterIndex(delimitersString, i);
+                var lengthOfDelimiter = indexOfEndSign - i - 1;
                     
-                    if (start <= i - 1)
-                    {
-                        delimiters.Add(delimitersString.Substring(start, i - start));
-                    }
-                }
+                var delimiter = delimitersString.Substring(indexOfStartSign, lengthOfDelimiter);
+
+                delimiters.Add(delimiter);
+
+                i = indexOfEndSign;
             }
             return delimiters;
+        }
+
+        private int GetEndSectionDelimiterIndex(string delimitersString, int startIndex)
+        {
+            for (int i = startIndex; i < delimitersString.Length; i++)
+            {
+                if (delimitersString[i] != ']') continue;
+                if (i - startIndex <= 1) continue;
+                return i;
+            }
+            return delimitersString.Length-1;
         }
         private string NormalizeNumbersString(string numbers)
         {
