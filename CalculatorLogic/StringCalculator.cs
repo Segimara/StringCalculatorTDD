@@ -32,26 +32,22 @@ namespace StringCalculator.Logic
             {
                 throw new NegativeNumberException(negativeNumbers);
             }
-            
-            var sum = convertedNumbers
+
+            return convertedNumbers
                 .Where(number => number <= maxNumber)
                 .Sum();
-
-            return sum;
         }
 
         private string[] GetDelimiters(string numbers)
         {
             var delimiters = new List<string>() { @"\n", "," };
 
-            if (!numbers.StartsWith("//"))
+            if (numbers.StartsWith("//"))
             {
-                return delimiters.ToArray();
+                var customDelimiters = GetCustomDelimiters(numbers);
+
+                delimiters.AddRange(customDelimiters);
             }
-
-            var customDelimiters = GetCustomDelimiters(numbers);
-
-            delimiters.AddRange(customDelimiters);
 
             return delimiters.ToArray();
         }
@@ -109,7 +105,7 @@ namespace StringCalculator.Logic
                 return lengthOfDelimiter;
             }
 
-            return delimitersString.Length-1;
+            return delimitersString.Length;
         }
         private string NormalizeNumbersString(string numbers)
         {
