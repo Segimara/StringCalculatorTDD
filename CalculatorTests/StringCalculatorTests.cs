@@ -1,4 +1,3 @@
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using StringCalculator.Logic.Exceptions;
 using Xunit;
 
@@ -62,8 +61,9 @@ namespace StringCalculator.Logic.Tests
             Assert.Equal("negatives not allowed\n Numbers: -2,-3", exception.Message);
         }
 
+
         [Fact]
-        public void Add_NumbersBigerThenThousand_ShouldSkipNumberBiggerThenThousand()
+        public void Add_NumbersBiggerThenThousand_ShouldSkipNumberBiggerThenThousand()
         {
             //Arrange
             var result = _calculator.Add(@"//;\n1;1001");
@@ -73,7 +73,7 @@ namespace StringCalculator.Logic.Tests
         }
 
         [Fact]
-        public void Add_NumbersWithMultipleCustomDelimitersLongernThanOneChar_ShouldBeEqualSumOfNumbers()
+        public void Add_NumbersWithMultipleCustomDelimitersLongerThanOneChar_ShouldParseMultipleDelimiters()
         {
             //Arrange
             var result = _calculator.Add(@"//[;#][%*]\n1;#2%*3");

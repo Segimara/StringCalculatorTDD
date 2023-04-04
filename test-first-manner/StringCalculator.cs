@@ -13,17 +13,17 @@ namespace StringCalculator.Logic
 
             var delimiters = GetDelimiters(numbers);
 
-            var separatedNumbers = NormilizeNumbersString(numbers)
+            var separatedNumbers = NormalizeNumbersString(numbers)
                 .Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 
             return GetSumOfNumbers(separatedNumbers);
         }
 
-        private int GetSumOfNumbers(string[] numbers)
+        private int GetSumOfNumbers(IEnumerable<string> numbers)
         {
-            List<int> negativeNumbers = new List<int>();
-            int sum = 0;
-            var maxNumber = 1000;
+            var negativeNumbers = new List<int>();
+            var sum = 0;
+            const int maxNumber = 1000;
 
             foreach (var number in numbers)
             {
@@ -68,11 +68,11 @@ namespace StringCalculator.Logic
         }
         private string[] GetCustomDelimiters(string numbers)
         {
-            List<string> delimiters = new List<string>();
-            var delimeterIndex = numbers.IndexOf(@"\n");
+            var delimiters = new List<string>();
+            var delimiterIndex = numbers.IndexOf(@"\n");
 
-            var indexOfStartDelimetersPart = delimeterIndex - 2;
-            var delimitersString = numbers.Substring(2, indexOfStartDelimetersPart);
+            var indexOfStartDelimitersPart = delimiterIndex - 2;
+            var delimitersString = numbers.Substring(2, indexOfStartDelimitersPart);
 
             if (delimitersString.Contains("["))
             {
@@ -90,13 +90,13 @@ namespace StringCalculator.Logic
         }
 
         // todo refactor
-        private List<string> ParseDelimiters(string delimitersString)
+        private IEnumerable<string> ParseDelimiters(string delimitersString)
         {
-            List<string> delimiters = new List<string>();
-            int startIndex = 0;
-            Stack<int> stack = new Stack<int>();
+            var delimiters = new List<string>();
+            var startIndex = 0;
+            var stack = new Stack<int>();
 
-            for (int i = 0; i < delimitersString.Length; i++)
+            for (var i = 0; i < delimitersString.Length; i++)
             {
                 if (delimitersString[i] == '[' && !stack.Any())
                 {
@@ -104,7 +104,6 @@ namespace StringCalculator.Logic
                 }
                 else if (delimitersString[i] == ']')
                 {
-                    //check if next [ are earlier than ]
                     var nextIndexOfStartSectionChar = delimitersString.IndexOf('[', i);
                     var nextIndexOfEndSectionChar = delimitersString.IndexOf(']', i + 1);
 
@@ -113,7 +112,7 @@ namespace StringCalculator.Logic
                         continue;
                     } 
 
-                    int start = stack.Pop() + 1;
+                    var start = stack.Pop() + 1;
                     
                     if (start <= i - 1)
                     {
@@ -123,7 +122,7 @@ namespace StringCalculator.Logic
             }
             return delimiters;
         }
-        private string NormilizeNumbersString(string numbers)
+        private string NormalizeNumbersString(string numbers)
         {
             if (numbers.Contains("//"))
             {
