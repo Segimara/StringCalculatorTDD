@@ -58,9 +58,8 @@ namespace StringCalculator.Logic
         private IEnumerable<string> GetCustomDelimiters(string numbers)
         {
             var delimiters = new List<string>();
-            var delimiterEndIndex = numbers.IndexOf(@"\n");
 
-            var lengthDelimitersPart = delimiterEndIndex - 2;
+            var lengthDelimitersPart = numbers.IndexOf(@"\n") - 2;
             var delimitersString = numbers.Substring(2, lengthDelimitersPart);
 
             if (delimitersString.Contains("["))
