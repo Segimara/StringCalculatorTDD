@@ -1,10 +1,13 @@
 ﻿namespace StringCalculator.Logic
 {
-    internal class Program
+    public class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            
+            var calculator = new StringCalculator();
+            var input = Console.ReadLine();
+            var result = calculator.Add(input);
+            Console.WriteLine(result);
         }
     }
 }

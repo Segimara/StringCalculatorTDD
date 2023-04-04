@@ -1,11 +1,10 @@
 ﻿using StringCalculator.Logic.Exceptions;
-using StringCalculator.Logic.Interfaces;
 
 namespace StringCalculator.Logic
 {
-    public class StringCalculator : ICalculator
+    public class StringCalculator 
     {
-        public int Add(string numbers)
+        public virtual int Add(string numbers)
         {
             if (string.IsNullOrEmpty(numbers))
             {
