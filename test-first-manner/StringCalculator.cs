@@ -64,7 +64,6 @@ namespace StringCalculator.Logic
 
             if (delimitersString.Contains("["))
             {
-
                 var customDelimiters = ParseDelimiters(delimitersString);
 
                 delimiters.AddRange(customDelimiters);
