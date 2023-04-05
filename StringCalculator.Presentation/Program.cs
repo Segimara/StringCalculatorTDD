@@ -1,7 +1,5 @@
 ﻿namespace StringCalculator.Presentation
 {
-    using StringCalculator.Logic;
-
     public class Program
     {
         static void Main(string[] args)
