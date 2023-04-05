@@ -107,6 +107,7 @@ namespace StringCalculator.Logic
 
             return delimitersString.Length;
         }
+
         private string NormalizeNumbersString(string numbers)
         {
             if (numbers.Contains("//"))
