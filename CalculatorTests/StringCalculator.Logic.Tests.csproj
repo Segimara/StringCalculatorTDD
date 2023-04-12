@@ -27,7 +27,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CalculatorLogic\StringCalculator.Logic.csproj" />
     <ProjectReference Include="..\StringCalculator.Presentation\StringCalculator.Presentation.csproj" />
-    <ProjectReference Include="..\test-first-manner\StringCalculator.Logic.csproj" />
   </ItemGroup>
 
 </Project>

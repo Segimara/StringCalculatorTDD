@@ -10,6 +10,7 @@ namespace StringCalculator.Logic.Tests
         {
             _calculator = new StringCalculator();
         }
+
         [Fact]
         public void Add_EmptyString_ShouldBeEqualZero()
         {

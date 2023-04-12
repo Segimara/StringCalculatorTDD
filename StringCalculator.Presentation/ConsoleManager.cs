@@ -1,6 +1,6 @@
 ﻿namespace StringCalculator.Presentation
 {
-    public class ConsoleManager 
+    public class ConsoleManager
     {
         public virtual void WriteLine(string value)
         {

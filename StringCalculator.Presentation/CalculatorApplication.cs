@@ -2,8 +2,8 @@
 {
     public class CalculatorApplication
     {
-        private Logic.StringCalculator _calculator { get; set; }
-        private ConsoleManager _consoleManager { get; }
+        private readonly Logic.StringCalculator _calculator;
+        private readonly ConsoleManager _consoleManager;
 
         public CalculatorApplication(ConsoleManager consoleManager, Logic.StringCalculator calculator)
         {
@@ -14,6 +14,7 @@
         public void Run()
         {
             _consoleManager.WriteLine("Enter comma separated numbers (enter to exit):");
+
             while (true)
             {
                 var input = _consoleManager.ReadLine();
@@ -23,7 +24,6 @@
 
                 ExecuteAndGetResult(input, _calculator);
 
-
                 _consoleManager.WriteLine("you can enter other numbers (enter to exit)?");
             }
         }
@@ -31,6 +31,7 @@
         private void ExecuteAndGetResult(string input, Logic.StringCalculator calculator)
         {
             var result = calculator.Add(input);
+
             _consoleManager.WriteLine($"Result is: {result}");
         }
     }

@@ -5,9 +5,9 @@ namespace StringCalculator.Presentation.Tests
 {
     public class CalculatorApplicationTests
     {
-        private Mock<ConsoleManager> _consoleMock;
-        private Mock<Logic.StringCalculator> _calculatorMock;
-        private CalculatorApplication _application;
+        private readonly Mock<ConsoleManager> _consoleMock;
+        private readonly Mock<Logic.StringCalculator> _calculatorMock;
+        private readonly CalculatorApplication _application;
 
         public CalculatorApplicationTests()
         {
@@ -19,7 +19,6 @@ namespace StringCalculator.Presentation.Tests
         [Fact]
         public void Run_ImmediateExit_ShouldBeOneOutputs()
         {
-
             _consoleMock.SetupSequence(c => c.ReadLine())
                 .Returns("");
 
@@ -65,7 +64,6 @@ namespace StringCalculator.Presentation.Tests
             _consoleMock.Verify(c => c.WriteLine("Enter comma separated numbers (enter to exit):"), Times.Once());
             _calculatorMock.Verify(c => c.Add("1,2,3"), Times.Exactly(2));
             _consoleMock.Verify(c => c.WriteLine("Result is: 6"), Times.Exactly(2));
-
         }
     }
 }

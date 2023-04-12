@@ -7,6 +7,7 @@
             var calculator = new Logic.StringCalculator();
             var consoleManager = new ConsoleManager();
             var application = new CalculatorApplication(consoleManager, calculator);
+
             application.Run();
         }
     }
