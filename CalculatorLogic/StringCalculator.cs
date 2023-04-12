@@ -2,7 +2,7 @@
 
 namespace StringCalculator.Logic
 {
-    public class StringCalculator 
+    public class StringCalculator
     {
         public virtual int Add(string numbers)
         {
@@ -16,31 +16,31 @@ namespace StringCalculator.Logic
             var separatedNumbers = NormalizeNumbersString(numbers)
                 .Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 
-            return GetSumOfNumbers(separatedNumbers);
+            var convertedNumbers = separatedNumbers
+                .Select(number => !string.IsNullOrEmpty(number.ToString()) ? int.Parse(number.ToString()) : 0);
+
+            return GetSumOfNumbers(convertedNumbers);
         }
 
-        private int GetSumOfNumbers(IEnumerable<string> numbers)
+        private int GetSumOfNumbers(IEnumerable<int> numbers)
         {
             var maxNumber = 1000;
 
-            var convertedNumbers = numbers
-                .Select(number => !string.IsNullOrEmpty(number) ? int.Parse(number) : 0);
-
-            var negativeNumbers = convertedNumbers.Where(number => number < 0);
+            var negativeNumbers = numbers.Where(number => number < 0);
 
             if (negativeNumbers.Any())
             {
                 throw new NegativeNumberException(negativeNumbers);
             }
 
-            return convertedNumbers
+            return numbers
                 .Where(number => number <= maxNumber)
                 .Sum();
         }
 
         private string[] GetDelimiters(string numbers)
         {
-            var delimiters = new List<string>() { @"\n", "," };
+            var delimiters = new List<string>();
 
             if (numbers.StartsWith("//"))
             {
@@ -49,8 +49,16 @@ namespace StringCalculator.Logic
                 delimiters.AddRange(customDelimiters);
             }
 
+            delimiters.AddRange(GetDefaultDelimiters());
+
             return delimiters.ToArray();
         }
+
+        private IEnumerable<string> GetDefaultDelimiters()
+        {
+            return new[] { @"\n", "," };
+        }
+
         private IEnumerable<string> GetCustomDelimiters(string numbers)
         {
             var delimiters = new List<string>();
@@ -58,7 +66,9 @@ namespace StringCalculator.Logic
             var lengthDelimitersPart = numbers.IndexOf(@"\n") - 2;
             var delimitersString = numbers.Substring(2, lengthDelimitersPart);
 
-            if (delimitersString.Contains("["))
+            var minimalLengthOfDelimitersString = 3;
+
+            if (delimitersString.Length >= minimalLengthOfDelimitersString)
             {
                 var customDelimiters = ParseDelimiters(delimitersString);
 
@@ -68,45 +78,17 @@ namespace StringCalculator.Logic
             {
                 delimiters.Add(delimitersString);
             }
- 
+
             return delimiters;
         }
 
         private IEnumerable<string> ParseDelimiters(string delimitersString)
         {
-            var delimiters = new List<string>();
+            var delimitersStringWithoutFirstAndLastChar = delimitersString.Substring(1, delimitersString.Length - 2);
 
-            for (var i = 0; i < delimitersString.Length; i++)
-            {
-                if (delimitersString[i] != '[') continue;
-
-                var lengthOfDelimiter = GetDelimiterLength(delimitersString, i);
-                    
-                var delimiter = delimitersString.Substring(i + 1, lengthOfDelimiter);
-
-                delimiters.Add(delimiter);
-
-                i += lengthOfDelimiter;
-            }
-
-            return delimiters;
+            return delimitersStringWithoutFirstAndLastChar.Split("][");
         }
 
-        private int GetDelimiterLength(string delimitersString, int startIndex)
-        {
-            for (var i = startIndex; i < delimitersString.Length; i++)
-            {
-                if (delimitersString[i] != ']') continue;
-
-                var lengthOfDelimiter =  i - startIndex - 1;
-
-                if (lengthOfDelimiter <= 0) continue;
-
-                return lengthOfDelimiter;
-            }
-
-            return delimitersString.Length;
-        }
 
         private string NormalizeNumbersString(string numbers)
         {
